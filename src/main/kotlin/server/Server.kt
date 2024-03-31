@@ -79,6 +79,6 @@ fun generateHandlers(vararg classes: KClass<*>): HttpHandler {
 }
 
 fun startServer(vararg classes: KClass<*>, port: Int) {
-    println("Starting server...")
+    println("Starting server on port $port ...")
     generateHandlers(*classes).asServer(SunHttp(port)).start()
 }
