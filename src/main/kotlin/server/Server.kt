@@ -45,22 +45,18 @@ fun handleResult(result: Any?): Response {
 fun createHandler(method: Method, route: String, controller: KClass<*>, function: KFunction<*>): RoutingHttpHandler {
     val controllerInstance = controller.createInstance()
 
-    fun handler(instance: Any, handlerFunction: KFunction<*>): (Request) -> Response {
-        return {
-            println("Handling $method to '$route'")
+    return route bind method to {
+        println("Handling $method to '$route'")
 
-            val response = try {
-                val result = handlerFunction.call(instance)
-                handleResult(result)
-            } catch (e: Exception) {
-                handleError(e)
-            }
-
-            response.header("Content-Type", "application/json")
+        val response = try {
+            val result = function.call(controllerInstance)
+            handleResult(result)
+        } catch (e: Exception) {
+            handleError(e)
         }
-    }
 
-    return route bind method to handler(controllerInstance, function)
+        response.header("Content-Type", "application/json")
+    }
 }
 
 fun generateHandlers(vararg classes: KClass<*>): HttpHandler {
