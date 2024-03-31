@@ -42,10 +42,8 @@ fun handleResult(result: Any?): Response {
     }
 }
 
-fun createHandler(method: Method, route: String, controller: KClass<*>, function: KFunction<*>): RoutingHttpHandler {
-    val controllerInstance = controller.createInstance()
-
-    return route bind method to {
+fun createHandler(method: Method, route: String, controllerInstance: Any, function: KFunction<*>): RoutingHttpHandler {
+    return route bind mapMethod(method) to {
         println("Handling $method to '$route'")
 
         val response = try {
@@ -65,6 +63,7 @@ fun generateHandlers(vararg classes: KClass<*>): HttpHandler {
             ?: throw Exception("Class $controller does not have @Controller annotation")
 
         println("Controller $controller")
+        val controllerInstance = controller.createInstance()
 
         controller.functions.map { function ->
             val endpointAnnotation = function.findAnnotations(Endpoint::class).firstOrNull()
@@ -72,11 +71,10 @@ fun generateHandlers(vararg classes: KClass<*>): HttpHandler {
             if (endpointAnnotation == null) null
             else {
                 val route = (controllerAnnotation.baseUrl + endpointAnnotation.route).ifBlank { "/" }
-                val method = Method.GET
 
-                println("Route $method '$route'")
+                println("Route ${endpointAnnotation.method} '$route'")
 
-                createHandler(method, route, controller, function)
+                createHandler(endpointAnnotation.method, route, controllerInstance, function)
             }
         }
     }.filterNotNull())
