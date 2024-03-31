@@ -1,4 +1,4 @@
-package server.annotations
+package server
 
 import server.Method
 

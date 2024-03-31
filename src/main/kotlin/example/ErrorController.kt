@@ -2,8 +2,8 @@ package example
 
 import org.http4k.core.Response
 import org.http4k.core.Status
-import server.annotations.Endpoint
-import server.annotations.Controller
+import server.Endpoint
+import server.Controller
 
 @Controller
 class ErrorController {

@@ -1,7 +1,7 @@
 package example
 
-import server.annotations.Endpoint
-import server.annotations.Controller
+import server.Endpoint
+import server.Controller
 
 @Controller
 class HelloWorldController {
