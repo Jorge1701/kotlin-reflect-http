@@ -1,4 +1,4 @@
 package server.annotations
 
 @Target(AnnotationTarget.FUNCTION)
-annotation class Endpoint(val url: String = "")
+annotation class Endpoint(val route: String = "")

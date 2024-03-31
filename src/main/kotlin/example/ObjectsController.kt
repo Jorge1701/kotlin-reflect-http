@@ -13,7 +13,7 @@ class ObjectsController {
         return DataObject("Test", 23)
     }
 
-    @Endpoint(url = "/list")
+    @Endpoint(route = "/list")
     fun getObjects(): List<DataObject> {
         return listOf(
             DataObject("Object 1", 23),

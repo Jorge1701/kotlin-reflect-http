@@ -8,12 +8,12 @@ import server.annotations.Controller
 @Controller
 class ErrorController {
 
-    @Endpoint(url = "/error")
+    @Endpoint(route = "/error")
     fun error() {
         throw Exception("Error")
     }
 
-    @Endpoint(url = "/error-response")
+    @Endpoint(route = "/error-response")
     fun errorResponse(): Response {
         return Response(Status.INTERNAL_SERVER_ERROR).body("Error")
     }

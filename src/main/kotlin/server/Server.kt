@@ -71,7 +71,7 @@ fun generateHandlers(vararg classes: KClass<*>): HttpHandler {
 
             if (endpointAnnotation == null) null
             else {
-                val route = (controllerAnnotation.baseUrl + endpointAnnotation.url).ifBlank { "/" }
+                val route = (controllerAnnotation.baseUrl + endpointAnnotation.route).ifBlank { "/" }
                 val method = Method.GET
 
                 println("Route $method '$route'")

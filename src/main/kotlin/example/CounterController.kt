@@ -6,7 +6,7 @@ import server.annotations.Endpoint
 @Controller
 class CounterController(var i: Int = 0) {
 
-    @Endpoint(url = "/count")
+    @Endpoint(route = "/count")
     fun count(): String {
         return "Current: ${i++}"
     }
